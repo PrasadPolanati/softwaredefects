@@ -1,1 +1,1 @@
-Predicting the defects in C programs given various various attributes about the code.
+Predicting the defects in C programs given various attributes about the code.
