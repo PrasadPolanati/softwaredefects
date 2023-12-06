@@ -7,6 +7,56 @@ import xgboost
 import catboost
 import lightgbm
 import joblib
+from io import BytesIO
 
 
+from sklearn import set_config
+from sklearn.compose import ColumnTransformer
+from sklearn.decomposition import PCA
+from sklearn.inspection import permutation_importance
+from sklearn.model_selection import StratifiedKFold, RepeatedStratifiedKFold
+from sklearn.feature_selection import SequentialFeatureSelector
+from sklearn.metrics import roc_auc_score, roc_curve, make_scorer, f1_score
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import SimpleImputer, IterativeImputer, KNNImputer
+from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.base import BaseEstimator, TransformerMixin, clone
+from sklearn.preprocessing import FunctionTransformer, StandardScaler, MinMaxScaler, LabelEncoder
 
+
+from sklearn.cluster import KMeans
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier, GradientBoostingClassifier, ExtraTreesClassifier
+from sklearn.svm import SVC
+from lightgbm import LGBMClassifier
+from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
+
+
+# Load your XGBoost model
+model = joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\data\xgboost_model.joblib')  # Replace with the correct path
+
+st.title('SOftware Defects Prediction')
+
+# File Upload Widget
+uploaded_file = st.file_uploader("Choose a file", type=["csv", "txt"])
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    df =  df.drop(columns=['id'])
+   
+    # dmatrix = xgboost.DMatrix(data=df)  # Assuming your model accepts XGBoost DMatrix
+    predictions = model.predict(df)
+  
+    predictions_df = pd.DataFrame(predictions, columns=['Predictions'])
+    # st.write(predictions)
+   
+    csv_data = predictions_df.to_csv(index=False, header=False).encode('utf-8')
+    st.download_button(
+        label="Download Predictions",
+        data=csv_data,
+        file_name="predictions.csv",
+        key="download_button"
+    )
+    

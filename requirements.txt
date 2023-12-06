@@ -7,5 +7,4 @@ scikit-learn
 lightgbm
 xgboost
 catboost
-tqdm
 joblib
