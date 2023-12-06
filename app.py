@@ -35,7 +35,7 @@ from catboost import CatBoostClassifier
 
 
 # Load your XGBoost model
-model = joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\data\xgboost_model.joblib')  # Replace with the correct path
+model = joblib.load('xgboost_model.joblib')  # Replace with the correct path
 
 st.title('SOftware Defects Prediction')
 
