@@ -40,6 +40,7 @@ class ModelTraining(object):
         train_data = pd.read_csv(self.data_path,index_col= index_col)
         X = train_data.drop(['defects'],axis=1)
         y= train_data['defects']
+        print(train_data.dtypes)
         return X,y
     
 
@@ -72,6 +73,7 @@ if __name__ == "__main__":
     uploaded_file = r'C:\Users\prasa\Desktop\softwaredefects\data\test.csv'
     df = pd.read_csv(uploaded_file)
     df =  df.drop(columns=['id'])
+    print(df.dtypes)
     predictions = model.predict(df)
     print(predictions)
     print(type(predictions))

@@ -45,7 +45,7 @@ uploaded_file = st.file_uploader("Choose a file", type=["csv", "txt"])
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     df =  df.drop(columns=['id'])
-   
+    print(df.dtypes)
     # dmatrix = xgboost.DMatrix(data=df)  # Assuming your model accepts XGBoost DMatrix
     predictions = model.predict(df)
   
