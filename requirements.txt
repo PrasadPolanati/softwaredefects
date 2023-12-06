@@ -3,8 +3,9 @@ numpy
 seaborn
 matplotlib
 streamlit
-scikit-learn
 lightgbm
 xgboost
 catboost
 joblib
+cython==0.29.21
+scikit-learn
