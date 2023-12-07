@@ -79,6 +79,3 @@ if __name__ == "__main__":
     # print(type(predictions))
     # csv_data = predictions.to_csv(index=False, header=False).encode('utf-8')
     
-
-#r'C:\Users\prasa\Desktop\data\train.csv'
-#index_col='id'
