@@ -70,13 +70,13 @@ class ModelTraining(object):
 if __name__ == "__main__":
     model_object  =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').model()
     model = joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\data\xgboost_model.joblib')  # Replace with the correct path
-    uploaded_file = r'C:\Users\prasa\Desktop\softwaredefects\data\test.csv'
-    df = pd.read_csv(uploaded_file)
-    df =  df.drop(columns=['id'])
-    print(df.dtypes)
-    predictions = model.predict(df)
-    print(predictions)
-    print(type(predictions))
+    # uploaded_file = r'C:\Users\prasa\Desktop\softwaredefects\data\test.csv'
+    # df = pd.read_csv(uploaded_file)
+    # df =  df.drop(columns=['id'])
+    # print(df.dtypes)
+    # predictions = model.predict(df)
+    # print(predictions)
+    # print(type(predictions))
     # csv_data = predictions.to_csv(index=False, header=False).encode('utf-8')
     
 
