@@ -64,18 +64,99 @@ class ModelTraining(object):
         # hist_score = roc_auc_score(Y_test, hist_pred)
         # print('Fold ==> Hist oof ROC-AUC score is ==>', hist_score)  
         return hist_md
+    
 
+    def modelrf(self):
+        X_train,Y_train = self.training_data(index_col='id')
+        RF_md = RandomForestClassifier(n_estimators = 500, 
+                                   max_depth = 7,
+                                   min_samples_split = 15,
+                                   min_samples_leaf = 10).fit(X_train, Y_train)
+    
+        # RF_pred = RF_md.predict_proba(X_test)[:, 1]
+        # RF_score = roc_auc_score(Y_test, RF_pred)
+
+        # print('Fold', i, '==> RF oof ROC-AUC score is ==>', RF_score)
+
+        # RF_pred_test = RF_md.predict_proba(test_cv)[:, 1]
+
+        #save the model using joblib
+        joblib.dump(RF_md, r'C:\Users\prasa\Desktop\softwaredefects\data\randomforest_model.joblib')
+        return RF_md
+
+
+    def modelextratrees(self):
+        X_train,Y_train = self.training_data(index_col='id')
+        ET_md = ExtraTreesClassifier(n_estimators = 500, 
+                                    max_depth = 7,
+                                    min_samples_split = 15,
+                                    min_samples_leaf = 10).fit(X_train, Y_train)
+
+        # ET_pred = ET_md.predict_proba(X_test)[:, 1]
+        # ET_score = roc_auc_score(Y_test, ET_pred)
+
+        # print('Fold', i, '==> ET oof ROC-AUC score is ==>', ET_score)
+
+        # ET_pred_test = ET_md.predict_proba(test_cv)[:, 1]
+        #save the model using joblib
+        joblib.dump(ET_md, r'C:\Users\prasa\Desktop\softwaredefects\data\extractrees_model.joblib')
+        return ET_md
+    
+    def modellightgbm(self):
+        X_train,Y_train = self.training_data(index_col='id')
+        LGBM_md = LGBMClassifier(objective = 'binary',
+                             n_estimators = 500,
+                             max_depth = 7,
+                             learning_rate = 0.01,
+                             num_leaves = 20,
+                             reg_alpha = 3,
+                             reg_lambda = 3,
+                             subsample = 0.7,
+                             colsample_bytree = 0.7).fit(X_train, Y_train)
+
+        # lgb_pred = LGBM_md.predict_proba(X_test)[:, 1]
+        # lgb_score = roc_auc_score(Y_test, lgb_pred)
+        #save the model using joblib
+        joblib.dump(LGBM_md, r'C:\Users\prasa\Desktop\softwaredefects\data\lightgbm_model.joblib')
+        return LGBM_md
+
+    def XGBoost(self):
+        X_train,Y_train = self.training_data(index_col='id')
+        XGB_md = XGBClassifier(objective = 'binary:logistic',
+                            tree_method = 'hist',
+                            colsample_bytree = 0.7, 
+                            gamma = 2, 
+                            learning_rate = 0.01, 
+                            max_depth = 7, 
+                            min_child_weight = 10, 
+                            n_estimators = 500, 
+                            subsample = 0.7).fit(X_train, Y_train)
+
+        # xgb_pred = XGB_md.predict_proba(X_test)[:, 1]
+        # xgb_score = roc_auc_score(Y_test, xgb_pred)
+        #save the model using joblib
+        joblib.dump(XGB_md, r'C:\Users\prasa\Desktop\softwaredefects\data\histxgbosst_model.joblib')
+        return XGB_md
 
 
 if __name__ == "__main__":
-    model_object  =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').model()
-    model = joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\data\xgboost_model.joblib')  # Replace with the correct path
-    # uploaded_file = r'C:\Users\prasa\Desktop\softwaredefects\data\test.csv'
-    # df = pd.read_csv(uploaded_file)
-    # df =  df.drop(columns=['id'])
-    # print(df.dtypes)
-    # predictions = model.predict(df)
-    # print(predictions)
+    # model_object  =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').model()
+    # model = joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\data\xgboost_model.joblib')  # Replace with the correct path
+    # model_object  =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').modelrf()
+    # print(model_object) 
+    # model_object2 =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').modelextratrees()
+    # print(model_object2)
+    # model_object3 =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').modellightgbm()
+    # print(model_object3)
+    model_object4 =  ModelTraining(data_path=r'C:\Users\prasa\Desktop\softwaredefects\data\train.csv').XGBoost()
+    print(model_object4)
+ 
+    uploaded_file = r'C:\Users\prasa\Desktop\softwaredefects\data\test.csv'
+    df = pd.read_csv(uploaded_file)
+    df =  df.drop(columns=['id'])
+    print(df.dtypes)
+    predictions = model_object4.predict(df)
+    print(predictions)
     # print(type(predictions))
     # csv_data = predictions.to_csv(index=False, header=False).encode('utf-8')
     

@@ -35,23 +35,37 @@ from catboost import CatBoostClassifier
 
 
 # Load your XGBoost model
-model = joblib.load('xgboost_model.joblib')  # Replace with the correct path
+# model = joblib.load('xgboost_model.joblib')  # Replace with the correct path
 
-st.title('SOftware Defects Prediction')
+st.title('Software Defects Prediction')
 
+
+model_selection = {
+    'Histogram Gradient Bossting Classifier ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\xgboost_model.joblib'),
+    'Random Forest ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\randomforest_model.joblib'),
+    'Extreme Gradient Boosting ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\histxgbosst_model.joblib'),
+    'Light GBM':joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\lightgbm_model.joblib'),
+    'Extra Trees Classfier':joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\extractrees_model.joblib')
+}
+
+
+
+# dmatrix = xgboost.DMatrix(data=df)  # Assuming your model accepts XGBoost DMatrix
+
+# Model selection for prediction
+st.subheader("Select Model - entire dataset is used for training here")
+model_selector = st.selectbox("Select a Model", list(model_selection.keys()))
+selected_model = model_selection[model_selector]
 # File Upload Widget
 uploaded_file = st.file_uploader("Choose a file", type=["csv", "txt"])
+
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     df =  df.drop(columns=['id'])
-    print(df.dtypes)
-    # dmatrix = xgboost.DMatrix(data=df)  # Assuming your model accepts XGBoost DMatrix
-    predictions = model.predict(df)
-  
+
+    predictions = selected_model.predict(df)
     predictions_df = pd.DataFrame(predictions, columns=['Predictions'])
-    # st.write(predictions)
-   
     csv_data = predictions_df.to_csv(index=False, header=False).encode('utf-8')
     st.download_button(
         label="Download Predictions",
@@ -59,4 +73,6 @@ if uploaded_file is not None:
         file_name="predictions.csv",
         key="download_button"
     )
-    
+else:
+    print("No file is uploaded")
+
