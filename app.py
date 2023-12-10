@@ -41,11 +41,11 @@ st.title('Software Defects Prediction')
 
 
 model_selection = {
-    'Histogram Gradient Bossting Classifier ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\xgboost_model.joblib'),
-    'Random Forest ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\randomforest_model.joblib'),
-    'Extreme Gradient Boosting ': joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\histxgbosst_model.joblib'),
-    'Light GBM':joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\lightgbm_model.joblib'),
-    'Extra Trees Classfier':joblib.load(r'C:\Users\prasa\Desktop\softwaredefects\extractrees_model.joblib')
+    'Histogram Gradient Bossting Classifier ': joblib.load(r'xgboost_model.joblib'),
+    'Random Forest ': joblib.load(r'randomforest_model.joblib'),
+    'Extreme Gradient Boosting ': joblib.load(r'histxgbosst_model.joblib'),
+    'Light GBM':joblib.load(r'lightgbm_model.joblib'),
+    'Extra Trees Classfier':joblib.load(r'extractrees_model.joblib')
 }
 
 
